@@ -34,14 +34,14 @@
 
 
             <div class="div1" style.width="100%">
-                <h2 style="text-align:center;color:grey">Seller's Admin page with total stock value</h2>
+                <h2 style="text-align:center;color:grey">Seller's Admin page</h2>
                 <form action="#" onsubmit="saveToLocalStorage(event)">
                     <div>
                         <label>Product Name</label><br>
                         <input type="text" name="product" id="productname"><br>
                         <label>Selling Price</label><br>
                         <input type="number" name="selling" id="sellingprice"><br>
-                        <input type="submit" value="Add Product" class="block" style="padding:4px;">
+                        <input type="submit" value="Add Product" class="block" style="padding:4px; background-color: yellow;">
                     </div>
                     <div>
 
@@ -50,87 +50,15 @@
 
             </div>
         </div>
-        <h2 style=" font-weight:bold; margin:1px">Products</h2>
+        
     </div>
+    <h3 style=" font-weight:bold; color:red; text-align:justify;">Products:-</h3>
     <ul id="listofitems" style="margin:10px"></ul>
-    <h2 id="l">Total Value Worth of Product:Rs</h2>
+    <h4 id="l" style="color:grey"></h4>
     </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
-    <script>
-        var to = 0;
-        function saveToLocalStorage(event) {
-            event.preventDefault();
-            const ProductName = event.target.product.value;
-            const SellingPrice = event.target.selling.value;
-
-            const obj = {
-                ProductName,
-                SellingPrice
-            }
-
-            axios.post("https://crudcrud.com/api/18b3babb68ce455085b51c4991cef998/selleradmin", obj)
-                .then((response) => {
-                    showUserOnScreen(response.data)
-                })
-                .catch((err) => {
-                    document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
-                    console.log(err);
-                })
-
-        }
-        window.addEventListener("DOMContentLoaded", () => {
-            axios.get("https://crudcrud.com/api/18b3babb68ce455085b51c4991cef998/selleradmin")
-                .then((res) => {
-                    for (var i = 0; i < res.data.length; i++) {
-                        showUserOnScreen(res.data[i]);
-                        console.log(res)
-                    }
-                })
-                .catch((err) => {
-                    document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
-                    console.log(err);
-                })
-
-
-        })
-        function showUserOnScreen(obj) {
-            const total = document.getElementById('l')
-            const parentElem = document.getElementById('listofitems');
-            const childElem = document.createElement('li');
-            childElem.textContent = obj.ProductName + '-' + obj.SellingPrice;
-
-            to += parseInt(obj.SellingPrice)
-            total.textContent = `Total Price=${to}`
-
-            //delete
-            const deleteButton = document.createElement('input');
-            deleteButton.type = "button";
-            deleteButton.value = "Delete Product";
-
-
-            deleteButton.onclick = () => {
-
-
-                to = to-parseInt(obj.SellingPrice)
-                total.textContent = `Total Price=${to}`
-                axios.delete(`https://crudcrud.com/api/18b3babb68ce455085b51c4991cef998/selleradmin/${obj._id}`)
-                    .then(response => response)
-                    .catch((err) => {
-                        document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
-                        console.log(err);
-                    })
-                parentElem.removeChild(childElem)
-
-
-
-
-            }
-
-            childElem.appendChild(deleteButton);
-            parentElem.appendChild(childElem);
-        }
-    </script>
+    <script src="main.js"></script>
 </body>
 
 </html>
